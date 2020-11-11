@@ -1,0 +1,338 @@
+
+<!--Setting an Element’s Content-->
+<div [ngClass]="'text-white m-5 p-2 ' + getClasses1()"
+    [textContent]="'Name: ' + (model.getProduct(2)?.name || 'None')">
+</div>
+<div class="form-group m-5">
+    <label>Name:</label>
+    <input class="form-control" [value]="model.getProduct(2)?.name || 'None'" />
+</div>
+
+<!--Using the String Interpolation Binding-->
+<div [ngClass]="'text-white m-5 p-2 ' + getClasses1()">
+    Name: {{ model.getProduct(2)?.name || 'None' }}
+</div>
+<div class="form-group m-5">
+    <label>Name:</label>
+    <input class="form-control" [value]="model.getProduct(2)?.name || 'None'" />
+</div>
+
+<!--Using the Attribute Binding-->
+<label class="bg-danger text-white"> => Using the Attribute Binding</label>
+<table class="table table-sm table-bordered table-striped mt-2">
+    <tr>
+        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+    </tr>
+    <tr>
+        <td [attr.colspan]="model.getProducts().length">
+            {{model.getProduct(2)?.name || 'None'}}
+        </td>
+    </tr>
+</table>
+
+<!--Using the Class Bindings-->
+<div class="text-white m-5">
+    <label class="bg-danger"> =>Using the Class Bindings</label>
+    <div [class]="getClasses(1)">
+        The first product is {{model.getProduct(1).name}}.
+    </div>
+    <div class="p-2" [class.bg-success]="model.getProduct(2).price < 50"
+            [class.bg-info]="model.getProduct(2).price >= 50">
+        The second product is {{model.getProduct(2).name}}
+    </div>
+</div>
+
+<!--Setting Classes Using the ngClass Directive-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Setting Classes Using the ngClass Directive</label>
+    <div class="p-2" [ngClass]="getClassMap(1)">
+        The first product is {{model.getProduct(1).name}}.
+    </div>
+    <div class="p-2" [ngClass]="getClassMap(2)">
+        The second product is {{model.getProduct(2).name}}.
+    </div>
+    <div class="p-2" 
+        [ngClass]="{'bg-success': model.getProduct(3).price < 50,
+        'bg-info': model.getProduct(3).price >= 50}">
+        The third product is {{model.getProduct(3).name}}
+    </div>
+</div>
+
+<!--Using the Style Bindings-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the Style Bindings</label>
+    <div class="p-2 bg-warning">
+        The <span [style.fontSize]="fontSizeWithUnits">first</span>
+        product is {{model.getProduct(1).name}}.
+    </div>
+    <div class="p-2 bg-info">
+        The <span [style.fontSize.px]="fontSizeWithoutUnits">second</span>
+        product is {{model.getProduct(2).name}}
+    </div>
+</div>
+
+<!--Using the ngStyle Directive-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the ngStyle Directive</label>
+    <div class="p-2 bg-warning">
+        The <span [ngStyle]="getStyles(1)">first</span>
+        product is {{model.getProduct(1).name}}.
+    </div>
+    <div class="p-2 bg-info">
+        The <span [ngStyle]="getStyles(2)">second</span>
+        product is {{model.getProduct(2).name}}
+    </div>
+</div>
+
+<!--Updating the Data in the Application????-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Updating the Data in the Application????</label>
+    <div [ngClass]="getClassesByPosition(0)">
+        The first product is {{getProductByPosition(0).name}}.
+    </div>
+    <div [ngClass]="getClassesByPosition(1)">
+    The second product is {{getProductByPosition(1).name}}
+    </div>
+</div>
+
+
+<!--Using the ngIf Directive-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the ngIf Directive</label>
+    <div *ngIf="getProductCount() > 4" class="bg-info p-2 mt-1">
+        There are more than 4 products in the model
+    </div>
+    <div *ngIf="getProductByPosition(0).name != 'Kayak'" class="bg-info p-2 mt-1">
+        The first product isn't a Kayak
+    </div>
+</div>
+
+<!--Using the ngSwitch Directive-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the ngSwitch Directive</label>
+    <div class="bg-info p-2 mt-1" [ngSwitch]="getProductCount()">
+        <span *ngSwitchCase="2">There are two products</span>
+        <span *ngSwitchCase="5">There are five products</span>
+        <span *ngSwitchDefault>This is the default</span>
+    </div>
+</div>
+
+<!--Avoiding Literal Value Problems-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Avoiding Literal Value Problems</label>
+    <div class="bg-info p-2 mt-1" [ngSwitch]="getProduct(1).name">
+        <span *ngSwitchCase="targetName">Kayak</span>
+        <span *ngSwitchCase="'Lifejacket'">Lifejacket</span>
+        <span *ngSwitchDefault>Other Product</span>
+    </div>
+</div>
+
+<!--Using the ngFor Directive-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the ngFor Directive</label>
+    <table class="table table-sm table-bordered mt-1 text-dark">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+    </tr>
+    <tr *ngFor="let item of getProducts()">
+        <td>{{item.name}}</td>
+        <td>{{item.category}}</td>
+        <td>{{item.price}}</td>
+    </tr>
+    </table>
+</div>
+
+<!--Using the Index Value-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the Index Value</label>
+    <table class="table table-sm table-bordered mt-1 text-dark">
+        <tr><th></th><th>Name</th><th>Category</th><th>Price</th></tr>
+        <tr *ngFor="let item of getProducts(); let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    </table>
+</div>
+
+<!--Using the Odd and Even Values-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the Odd and Even Values</label>
+    <table class="table table-sm table-bordered mt-1">
+        <tr><th></th><th>Name</th><th>Category</th><th>Price</th></tr>
+        <tr *ngFor="let item of getProducts(); let i = index; let odd = odd"
+                class="text-white" [class.bg-primary]="odd" [class.bg-info]="!odd">
+            <td>{{i + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    </table>
+</div>
+
+<!--Using the First and Last Values-->
+<div class="text-white m-5">
+    <label class="bg-danger"> => Using the First and Last Values</label>
+    <table class="table table-sm table-bordered mt-1">
+        <tr class="text-dark">
+            <th></th><th>Name</th><th>Category</th><th>Price</th>
+        </tr>
+        <tr *ngFor="let item of getProducts(); let i = index; let odd = odd;
+                let first = first; let last = last; trackBy:getKey" class="text-white"
+                [class.bg-primary]="odd" [class.bg-info]="!odd"
+                [class.bg-warning]="first || last">
+            <td>{{i + 1}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.category}}</td>
+            <td *ngIf="!last">{{item.price}}</td>
+        </tr>
+    </table>
+</div>
+
+<!--Using the ngTemplateOutlet Directive-->
+<div class="text-white m-3">
+    <label class="bg-danger"> => Using the ngTemplateOutlet Directive</label>
+</div>
+
+<ng-template #titleTemplate>
+    <h4 class="p-2 bg-success text-white m-3">Repeated Content</h4>
+</ng-template>
+
+<ng-template [ngTemplateOutlet]="titleTemplate"></ng-template>
+<ng-template [ngTemplateOutlet]="titleTemplate"></ng-template>
+
+<!--Providing Context Data-->
+<div class="text-white m-3">
+    <label class="bg-danger"> => Providing Context Data</label>
+</div>
+
+<ng-template #titleTemplate1 let-text="title">
+    <h4 class="p-2 bg-success text-white m-3">{{text}}</h4>
+</ng-template>
+<ng-template [ngTemplateOutlet]="titleTemplate1" [ngTemplateOutletContext]="{title: 'Header'}">
+</ng-template>
+<div class="bg-info p-2 m-3 text-white">
+    There are {{getProductCount()}} products.
+</div>
+<ng-template [ngTemplateOutlet]="titleTemplate1" [ngTemplateOutletContext]="{title: 'Footer'}">
+</ng-template>
+
+<!--Understanding One-Way Data Binding Restrictions
+<div class="text-white m-3">
+    <label class="bg-danger"> => Understanding One-Way Data Binding Restrictions
+</label>
+</div>
+<div class="bg-info p-2 m-2">
+    Next Product is {{nextProduct.name}}
+</div>
+-->
+
+<!--Understanding the Expression Context-->
+<div class="text-white m-3">
+    <label class="bg-danger"> => Understanding the Expression Context</label>
+<div class='bg-info p-2 m-3'>
+    The rounded price is {{ getProductPrice(1) }}
+</div>
+
+
+<div class="m-2">
+    <label class="bg-danger"> => Using Events and Forms</label>
+    <div class="bg-info text-white p-2">
+        Selected Product: {{ selectedProduct || '(None)' }}
+    </div>
+    <table class="table table-sm table-bordered">
+        <tr><th></th><th>Name</th><th>Category</th><th>Price</th></tr>
+        <tr *ngFor="let item of getProducts(); let i = index" 
+            [class.bg-info]="getSelected(item)">
+            <td (mouseover)="selectedProduct=item.name">{{i + 1}}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+    </table>
+    <div class="form-group">
+        <label class="text-dark">Product Name</label>
+        <input class="form-control" (input)="selectedProduct=$event.target.value"
+            [value]="selectedProduct || ''" />
+    </div>
+    <div class="form-group">
+        <label class="text-dark">Product Name</label>
+        <input class="form-control" (input)="selectedProduct=$event.target.value"
+            [value]="selectedProduct || ''" />
+    </div>
+</div>
+
+<style>
+    input.ng-dirty.ng-invalid { border: 2px solid #ff0000 }
+    input.ng-dirty.ng-valid { border: 2px solid #6bc502 }
+</style>
+
+<form class="m-2" novalidate [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <div class="bg-danger text-white p-2 mb-2"
+            *ngIf="formSubmitted && formGroup.invalid">
+        There are problems with the form
+        <ul>
+            <li *ngFor="let error of formGroup.getFormValidationMessages()">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+    <div class="form-group" *ngFor="let control of formGroup.productControls">
+        <label class="text-dark">{{control.label}}</label>
+        <input class="form-control"
+            name="{{control.modelProperty}}"
+            formControlName="{{control.modelProperty}}" />
+        <ul class="text-danger list-unstyled"
+            *ngIf="(formSubmitted || control.dirty) && control.invalid">
+            <li *ngFor="let error of control.getValidationMessages()">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+    <button class="btn btn-primary" type="submit"
+        [disabled]="formSubmitted && formGroup.invalid"
+        [class.btn-secondary]="formSubmitted && formGroup.invalid">
+        Create
+    </button>
+    
+</form>
+
+
+
+<!--Creating Attribute Directives-->
+<label class="bg-danger text-white"> => Creating Attribute Directives</label>
+
+<div class="row m-2">
+    <div class="col-6">
+        <form class="m-2" novalidate (ngSubmit)="submitForm()">
+            <div class="form-group">
+                <label class="text-dark">Name</label>
+                <input class="form-control" name="name" [(ngModel)]="newProduct.name" />
+            </div>
+            <div class="form-group">
+                <label class="text-dark">Category</label>
+                <input class="form-control" name="category"
+                    [(ngModel)]="newProduct.category" />
+            </div>
+            <div class="form-group">
+                <label class="text-dark">Price</label>
+                <input class="form-control" name="price" [(ngModel)]="newProduct.price" />
+            </div>
+            <button class="btn btn-primary" type="submit">Create</button>
+        </form>
+    </div>
+    <div class="col-6">
+        <table class="table table-sm table-bordered table-striped mt-4">
+            <tr><th></th><th>Name</th><th>Category</th><th>Price</th></tr>
+            <tr *ngFor="let item of getProducts(); let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.category}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
