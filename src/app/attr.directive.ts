@@ -8,3 +8,5 @@ export class PaAttrDirective {
         element.nativeElement.classList.add("bg-success", "text-white");
     }
 }
+
+//  Simple Attribute Directive
